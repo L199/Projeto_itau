@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.hosptial.tau.hosptial.model.Cliente;
 import com.hosptial.tau.hosptial.model.Conta;
 import com.hosptial.tau.hosptial.service.ContaService;
 
@@ -25,18 +25,28 @@ public class ContaController {
     @Autowired
     private ContaService service;
 
-   
-   
-   
-    @PostMapping
+    @GetMapping // 1
+    public ResponseEntity<List<Conta>> getAll() {
+            List<Conta> lista = (List<Conta>) service.getAll();
+    if  (lista == null || lista.size() == 0) {
+            return ResponseEntity.notFound().build();
+    }
+    return ResponseEntity.ok(lista);
+  
+    }
+
+
+
+    
+
+    /*@PostMapping
     public ResponseEntity<Conta> adicionarConta(@RequestBody Conta conta) {
-        Conta contaCriada = service.adicionarConta(conta);
-        return ResponseEntity.created(
-                ServletUriComponentsBuilder.fromCurrentRequest()
-                        .path("/{id}")
-                        .buildAndExpand(contaCriada.getNumeroConta())
-                        .toUri())
-                .body(contaCriada);
+        Conta contaInserido = service.adicionarConta(conta);
+        if (contaInserido == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(contaInserido);
+
     }
 
     @GetMapping("/{numero}")
@@ -45,36 +55,20 @@ public class ContaController {
         return ResponseEntity.ok(conta);
     }
 
-    @PutMapping("/{numero}")
-    public ResponseEntity<Conta> alterarDados(@PathVariable int numero, @RequestBody Conta conta) {
-        Conta contaAtualizada = service.alterarDados(numero, conta);
-        return ResponseEntity.ok(contaAtualizada);
+    @PutMapping("/{id}")
+    public ResponseEntity<Conta> alterarDados(@PathVariable long id, @RequestBody Conta conta) {
+        Conta contaAtualizado = service.alterarDados(id, conta);
+        if (contaAtualizado == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(contaAtualizado);
+
     }
 
-    @GetMapping("/cliente/{id}")
+    @GetMapping("/cliente/{}")
     public ResponseEntity<List<Conta>> recuperarContasPeloCliente(@PathVariable int id) {
         List<Conta> contas = service.recuperarContasPeloCliente(id);
         return ResponseEntity.ok(contas);
-    }
-   
-
-   
-   
-   
-   
-   
-
-   
-   
-   
-   
-   
-   
-
-   
-   
-   
-   
-   
+    }*/
 
 }

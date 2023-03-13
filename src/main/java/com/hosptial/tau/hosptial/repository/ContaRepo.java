@@ -8,6 +8,6 @@ import com.hosptial.tau.hosptial.model.Conta;
 
 public interface ContaRepo extends CrudRepository <Conta, Long> {
     
-
+    List<Conta> findByClienteIdCliente(int id);
 
 }

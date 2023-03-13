@@ -43,6 +43,10 @@ public class Conta {
     @ManyToOne
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;
+
+	
+	
+	
     
     
 
